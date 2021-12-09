@@ -4,6 +4,10 @@ public class PagamentoBoletoResponse {
 
     private String resposta;
 
+    public PagamentoBoletoResponse(String resposta) {
+        this.resposta = resposta;
+    }
+
     public String getResposta() {
         return resposta;
     }
