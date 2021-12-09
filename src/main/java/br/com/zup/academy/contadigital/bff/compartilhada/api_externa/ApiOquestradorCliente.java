@@ -1,5 +1,9 @@
-package br.com.zup.academy.contadigital.bff.pagamento_boleto;
+package br.com.zup.academy.contadigital.bff.compartilhada.api_externa;
 
+import br.com.zup.academy.contadigital.bff.pagamento_boleto.PagamentoBoletoRequest;
+import br.com.zup.academy.contadigital.bff.pagamento_boleto.PagamentoBoletoResponse;
+import br.com.zup.academy.contadigital.bff.recarga_celular.RecargaCelularRequest;
+import br.com.zup.academy.contadigital.bff.recarga_celular.RecargaCelularResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,4 +19,9 @@ public interface ApiOquestradorCliente {
     ResponseEntity<PagamentoBoletoResponse> solicitaPagamentoBoleto(
             @PathVariable Long idUsuario,
             @RequestBody @Valid PagamentoBoletoRequest request);
+
+    @PostMapping("/pagamento-boleto/{idUsuario}")
+    ResponseEntity<RecargaCelularResponse> solicitaRecargaCelular(
+            @PathVariable Long idUsuario,
+            @RequestBody @Valid RecargaCelularRequest request);
 }
