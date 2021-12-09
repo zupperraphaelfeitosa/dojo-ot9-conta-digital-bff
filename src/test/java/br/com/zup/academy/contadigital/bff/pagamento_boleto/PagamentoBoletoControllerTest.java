@@ -124,4 +124,20 @@ class PagamentoBoletoControllerTest {
                         .isUnprocessableEntity());
     }
 
+    @Test
+    void naoDeveRealizarUmPagamentoDeBoletoQuandoServcoIndisponivel503() throws Exception {
+        PagamentoBoletoRequest pagamentoBoletoRequest = new PagamentoBoletoRequest(new BigDecimal("100"), "11111");
+        FeignException.ServiceUnavailable mockException = Mockito.mock(FeignException.ServiceUnavailable.class);
+        Mockito.when(api.solicitaPagamentoBoleto(Mockito.eq(1L), Mockito.any(PagamentoBoletoRequest.class)))
+                .thenThrow(mockException);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/clientes/1/pagamento-boleto")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(pagamentoBoletoRequest)))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isServiceUnavailable());
+    }
+
 }
