@@ -17,10 +17,10 @@ public class RecargaCelularController {
     private ApiOquestradorCliente api;
 
     @PostMapping("/{idCliente}/recarga-celular")
-    public ResponseEntity<?> realizarOperacao(@PathVariable Long idClinte,
+    public ResponseEntity<?> realizarOperacao(@PathVariable Long idCliente,
                                               @RequestBody @Valid RecargaCelularRequest request) {
         try {
-            api.solicitaRecargaCelular(idClinte, request);
+            api.solicitaRecargaCelular(idCliente, request);
             return ResponseEntity.ok().build();
 
         } catch (FeignException.BadRequest e) {
