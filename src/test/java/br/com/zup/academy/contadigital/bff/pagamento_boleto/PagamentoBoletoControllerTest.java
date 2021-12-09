@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
@@ -58,6 +59,20 @@ class PagamentoBoletoControllerTest {
                         .post("/api/v1/clientes/1/pagamento-boleto")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(pagamentoBoletoRequest)))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isBadRequest());
+    }
+
+    @Test
+    void naoDeveRealizarUmPagamentoDeBoletoComValorNegativoRetorno400() throws Exception {
+        PagamentoBoletoRequest pagamentoBoletoRequest = new PagamentoBoletoRequest(new BigDecimal("-100"), "11111");
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/clientes/1/pagamento-boleto")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(pagamentoBoletoRequest)))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers
                         .status()
                         .isBadRequest());
