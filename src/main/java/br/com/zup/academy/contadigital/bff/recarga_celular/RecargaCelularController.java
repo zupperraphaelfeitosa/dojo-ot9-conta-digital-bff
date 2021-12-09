@@ -1,7 +1,6 @@
 package br.com.zup.academy.contadigital.bff.recarga_celular;
 
 import br.com.zup.academy.contadigital.bff.compartilhada.api_externa.ApiOquestradorCliente;
-import br.com.zup.academy.contadigital.bff.recarga_celular.RecargaCelularRequest;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ public class RecargaCelularController {
     @Autowired
     private ApiOquestradorCliente api;
 
-    @PostMapping("/{idCliente/recarga-celular}")
+    @PostMapping("/{idCliente}/recarga-celular")
     public ResponseEntity<?> realizarOperacao(@PathVariable Long idClinte,
                                               @RequestBody @Valid RecargaCelularRequest request) {
         try {
@@ -31,10 +30,9 @@ public class RecargaCelularController {
             return ResponseEntity.unprocessableEntity().body("Saldo insuficiente");
 
         } catch (FeignException.NotFound e) {
-            return ResponseEntity.unprocessableEntity().body("Cliente não encontrado");
+            return new ResponseEntity<>("Cliente não encontrado", HttpStatus.NOT_FOUND);
 
-        }
-        catch (FeignException.ServiceUnavailable e) {
+        } catch (FeignException.ServiceUnavailable e) {
             return new ResponseEntity<>("Ocorreu uma falha de comunicação com o serviço de recarga.", HttpStatus.SERVICE_UNAVAILABLE);
 
         } catch (Exception e) {
