@@ -140,4 +140,20 @@ class PagamentoBoletoControllerTest {
                         .isServiceUnavailable());
     }
 
+    @Test
+    void naoDeveRealizarUmPagamentoDeBoletoQuandoServcoIndisponivel() throws Exception {
+        PagamentoBoletoRequest pagamentoBoletoRequest = new PagamentoBoletoRequest(new BigDecimal("100"), "11111");
+        FeignException.InternalServerError mockException = Mockito.mock(FeignException.InternalServerError.class);
+        Mockito.when(api.solicitaPagamentoBoleto(Mockito.eq(1L), Mockito.any(PagamentoBoletoRequest.class)))
+                .thenThrow(mockException);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/clientes/1/pagamento-boleto")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(pagamentoBoletoRequest)))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isInternalServerError());
+    }
+
 }

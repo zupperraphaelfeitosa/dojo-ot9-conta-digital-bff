@@ -35,7 +35,7 @@ public class PagamentoBoletoController {
         catch (FeignException.ServiceUnavailable e) {
             return new ResponseEntity<>("Ocorreu uma falha de comunicação com o serviço de pagamento de boleto.", HttpStatus.SERVICE_UNAVAILABLE);
 
-        } catch (Exception e) {
+        } catch (FeignException e) {
             return ResponseEntity.internalServerError().body("Erro inesperado");
         }
     }
