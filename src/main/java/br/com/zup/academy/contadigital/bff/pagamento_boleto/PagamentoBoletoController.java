@@ -16,10 +16,10 @@ public class PagamentoBoletoController {
     @Autowired
     private ApiOquestradorCliente api;
 
-    @PostMapping("/{idCliente/pagamento-boleto}")
-    public ResponseEntity<?> realizarOperacao(@PathVariable Long idClinte, @RequestBody @Valid PagamentoBoletoRequest request) {
+    @PostMapping("/{idCliente}/pagamento-boleto")
+    public ResponseEntity<?> realizarOperacao(@PathVariable Long idCliente, @RequestBody @Valid PagamentoBoletoRequest request) {
         try {
-            api.solicitaPagamentoBoleto(idClinte, request);
+            api.solicitaPagamentoBoleto(idCliente, request);
             return ResponseEntity.ok().build();
 
         } catch (FeignException.BadRequest e) {
