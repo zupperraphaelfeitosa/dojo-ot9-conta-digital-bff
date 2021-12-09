@@ -78,4 +78,18 @@ class PagamentoBoletoControllerTest {
                         .isBadRequest());
     }
 
+    @Test
+    void naoDeveRealizarUmPagamentoDeBoletoComNumeroBoletoEmBrancoRetorno400() throws Exception {
+        PagamentoBoletoRequest pagamentoBoletoRequest = new PagamentoBoletoRequest(new BigDecimal("100"), "");
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/clientes/1/pagamento-boleto")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(pagamentoBoletoRequest)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isBadRequest());
+    }
+
 }
