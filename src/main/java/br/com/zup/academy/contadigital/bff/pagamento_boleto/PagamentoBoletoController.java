@@ -28,7 +28,11 @@ public class PagamentoBoletoController {
         } catch (FeignException.UnprocessableEntity e) {
             return ResponseEntity.unprocessableEntity().body("Saldo insuficiente");
 
-        } catch (FeignException.ServiceUnavailable e) {
+        } catch (FeignException.NotFound e) {
+            return new ResponseEntity<>("Cliente não encontrado", HttpStatus.NOT_FOUND);
+
+        }
+        catch (FeignException.ServiceUnavailable e) {
             return new ResponseEntity<>("Ocorreu uma falha de comunicação com o serviço de pagamento de boleto.", HttpStatus.SERVICE_UNAVAILABLE);
 
         } catch (Exception e) {
