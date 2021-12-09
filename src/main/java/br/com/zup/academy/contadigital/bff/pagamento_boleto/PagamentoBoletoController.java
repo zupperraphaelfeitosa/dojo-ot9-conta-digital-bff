@@ -1,5 +1,6 @@
 package br.com.zup.academy.contadigital.bff.pagamento_boleto;
 
+import br.com.zup.academy.contadigital.bff.compartilhada.api_externa.ApiOquestradorCliente;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class PagamentoBoletoController {
             return ResponseEntity.unprocessableEntity().body("Saldo insuficiente");
 
         } catch (FeignException.ServiceUnavailable e) {
-            return new ResponseEntity<>("Ocorreu uma falha de comunicação com o serviço de recarga.", HttpStatus.SERVICE_UNAVAILABLE);
+            return new ResponseEntity<>("Ocorreu uma falha de comunicação com o serviço de pagamento de boleto.", HttpStatus.SERVICE_UNAVAILABLE);
 
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Erro inesperado");
