@@ -20,7 +20,7 @@ public interface ApiOquestradorCliente {
             @PathVariable Long idUsuario,
             @RequestBody @Valid PagamentoBoletoRequest request);
 
-    @PostMapping("/pagamento-boleto/{idUsuario}")
+    @PostMapping("/recarga-celular/{idUsuario}")
     ResponseEntity<RecargaCelularResponse> solicitaRecargaCelular(
             @PathVariable Long idUsuario,
             @RequestBody @Valid RecargaCelularRequest request);
