@@ -18,4 +18,12 @@ public class PagamentoBoletoRequest {
         this.valor = valor;
         this.numeroBoleto = numeroBoleto;
     }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public String getNumeroBoleto() {
+        return numeroBoleto;
+    }
 }

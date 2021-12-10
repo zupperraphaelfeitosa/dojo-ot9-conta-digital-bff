@@ -21,4 +21,16 @@ public class RecargaCelularRequest {
         this.operadora = operadora;
         this.valor = valor;
     }
+
+    public String getNumeroCelular() {
+        return numeroCelular;
+    }
+
+    public Operadora getOperadora() {
+        return operadora;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
 }
